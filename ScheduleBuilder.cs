@@ -16,8 +16,8 @@ namespace NICE_SchedulingKata
                 var dep = parsedDependencies.SingleOrDefault(x => x.Child.Id == task.Id);
                 if (dep != null)
                 {
-                    ParsedTasksExtensions.RemoveDependencyParentFromCurrentPosition(orderedTasks, dep);
-                    ParsedTasksExtensions.InsertDependencyParentBeforeItsChild(orderedTasks, dep);
+                    orderedTasks.RemoveDependencyParentFromCurrentPosition(dep);
+                    orderedTasks.InsertDependencyParentBeforeItsChild(dep);
                 }
             }
             return orderedTasks;
