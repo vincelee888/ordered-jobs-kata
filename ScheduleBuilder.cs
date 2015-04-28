@@ -16,21 +16,11 @@ namespace NICE_SchedulingKata
                 var dep = parsedDependencies.SingleOrDefault(x => x.Child.Id == task.Id);
                 if (dep != null)
                 {
-                    RemoveDependencyParentFromCurrentPosition(orderedTasks, dep);
-                    InsertDependencyParentBeforeItsChild(orderedTasks, dep);
+                    ParsedTasksExtensions.RemoveDependencyParentFromCurrentPosition(orderedTasks, dep);
+                    ParsedTasksExtensions.InsertDependencyParentBeforeItsChild(orderedTasks, dep);
                 }
             }
             return orderedTasks;
-        }
-
-        private static void InsertDependencyParentBeforeItsChild(List<SchedulingTask> orderedTasks, Dependency dep)
-        {
-            orderedTasks.Insert(orderedTasks.FindIndex(x => x.Id == dep.Child.Id), dep.Parent);
-        }
-
-        private static void RemoveDependencyParentFromCurrentPosition(List<SchedulingTask> orderedTasks, Dependency dep)
-        {
-            orderedTasks.RemoveAt(orderedTasks.FindIndex(x => x.Id == dep.Parent.Id));
         }
     }
 }

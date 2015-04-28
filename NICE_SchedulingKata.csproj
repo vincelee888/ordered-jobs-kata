@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Dependency.cs" />
     <Compile Include="DependencyParser.cs" />
+    <Compile Include="ParsedTasksExtensions.cs" />
     <Compile Include="ScheduleBuilder.cs" />
     <Compile Include="Scheduler.cs" />
     <Compile Include="SchedulerTests.cs" />
