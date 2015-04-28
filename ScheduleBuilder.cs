@@ -9,17 +9,17 @@ namespace NICE_SchedulingKata
             IEnumerable<SchedulingTask> parsedTasks, 
             IEnumerable<Dependency> parsedDependencies)
         {
-            var orderedTasks = parsedTasks.ToList();
+            var schedulingTasks = parsedTasks as List<SchedulingTask> ?? parsedTasks.ToList();
 
-            foreach (var task in parsedTasks)
-            {
-                var dep = parsedDependencies.SingleOrDefault(x => x.Child.Id == task.Id);
-                if (dep != null)
+            var orderedTasks = schedulingTasks.ToList();
+
+            schedulingTasks.GetCorrespondingDependencyForTask(parsedDependencies)
+                .ForEach(correspondingDependency =>
                 {
-                    orderedTasks.RemoveDependencyParentFromCurrentPosition(dep);
-                    orderedTasks.InsertDependencyParentBeforeItsChild(dep);
-                }
-            }
+                    orderedTasks.RemoveDependencyParentFromCurrentPosition(correspondingDependency);
+                    orderedTasks.InsertDependencyParentBeforeItsChild(correspondingDependency);
+                });
+
             return orderedTasks;
         }
     }
