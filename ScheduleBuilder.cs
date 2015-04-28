@@ -16,30 +16,21 @@ namespace NICE_SchedulingKata
                 var dep = parsedDependencies.SingleOrDefault(x => x.Child.Id == task.Id);
                 if (dep != null)
                 {
-                    orderedTasks.RemoveAt(FindIndexOfDependencyParent(orderedTasks, dep));
-                    orderedTasks.Insert(FindIndexOfDependencyChild(orderedTasks, dep), dep.Parent);
+                    RemoveDependencyParentFromCurrentPosition(orderedTasks, dep);
+                    InsertDependencyParentBeforeItsChild(orderedTasks, dep);
                 }
-
-                //foreach (var dependency in parsedDependencies)
-                //{
-                //    if (dependency.Child.Id != task.Id) continue;
-                //    var parentIndex = orderedTasks.FindIndex(x => x.Id == dependency.Parent.Id);
-                //    orderedTasks.RemoveAt(parentIndex);
-                //    var childIndex = orderedTasks.FindIndex(x => x.Id == dependency.Child.Id);
-                //    orderedTasks.Insert(childIndex, dependency.Parent);
-                //}
             }
             return orderedTasks;
         }
 
-        private static int FindIndexOfDependencyChild(List<SchedulingTask> orderedTasks, Dependency dep)
+        private static void InsertDependencyParentBeforeItsChild(List<SchedulingTask> orderedTasks, Dependency dep)
         {
-            return orderedTasks.FindIndex(x => x.Id == dep.Child.Id);
+            orderedTasks.Insert(orderedTasks.FindIndex(x => x.Id == dep.Child.Id), dep.Parent);
         }
 
-        private static int FindIndexOfDependencyParent(List<SchedulingTask> orderedTasks, Dependency dep)
+        private static void RemoveDependencyParentFromCurrentPosition(List<SchedulingTask> orderedTasks, Dependency dep)
         {
-            return orderedTasks.FindIndex(x => x.Id == dep.Parent.Id);
+            orderedTasks.RemoveAt(orderedTasks.FindIndex(x => x.Id == dep.Parent.Id));
         }
     }
 }
